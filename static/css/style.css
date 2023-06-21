@@ -1,0 +1,86 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+h1.card-title {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.product-card {
+    height: 100% !important;
+}
+
+.navbar .input-group,
+.navbar-nav {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120%;
+}
+
+.color-modes .dropdown-menu {
+    padding: 0.25rem;
+}
+
+.color-modes .dropdown-item {
+    border-radius: 0.25rem;
+}
+
+
+.color-modes .dropdown-item.active,
+.color-modes .dropdown-item:active {
+    background-image: var(--bs-gradient);
+    background-color: var(--bs-info);
+    color: var(--bs-black);
+    font-weight: 600;
+}
+
+.color-modes .dropdown-item .bi {
+    fill: var(--bs-body-color);
+}
+
+.color-modes .dropdown-item.active .bi,
+.color-modes .dropdown-item:active .bi {
+    display: block !important;
+    fill: var(--bs-black);
+}
+
+.navbar .bi {
+    width: 1em;
+    height: 1em;
+    fill: #101010;
+}
+
+.pagination .active>.page-link,
+.page-link.active {
+    color: var(--bs-black);
+    background-color: var(--bs-info);
+    border-color: var(--bs-info);
+}
+
+.pagination .page-link {
+    color: var(--bs-body-color);
+}
+
+.qty-btn .text {
+    font-size: 125%;
+    padding: 0px 5px;
+}
+
+.qty-btn a {
+    color: var(--bs-emphasis-color);
+    text-decoration: none;
+    padding: 0px 2px;
+}
+
+.qty-btn a.delete {
+    color: var(--bs-danger);
+}
+
+.qty-btn .disabled {
+    color: var(--bs-tertiary-color)
+}

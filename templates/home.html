@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadesc %}
+{% if category %}
+{{category.description|truncatewords:155}}
+{% else %}
+<h4>Welcome to Fresh Kart</h4>
+{% endif %}
+{% endblock metadesc %}
+
+
+{% block title %}{% if category %}{{category.name}} | {% endif %}{% endblock title %}
+
+
+{% block body %}
+
+<div class="mt-3">
+    {% if category %}
+    <h3>{{category.name}}</h3>
+    <p><a href="{% url 'shop:home' %}">Our Products</a></p>
+    {% else %}
+    <h3>Welcome to Fresh Kart</h3>
+    {% endif %}
+</div>
+
+
+<div class="card mt-3 mb-5">
+    {% if category %}
+    <img height="300px" class="object-fit-cover" src="{{category.image.url}}" alt="{{category.name}}">
+    {% else %}
+    <img src="{% static 'images/banner.jpg' %}" alt="our product banner">
+    {% endif %}
+</div>
+
+<div class=" mb-5 text-center">
+    {% if category %}
+    <h1 class="text-center">{{category.name}}</h1>
+    <p>{{ category.description }}</p>
+    {% else %}
+    <h1>Our Products</h1>
+    <p class="w-100 ">We bring you the best quality products from 100s of farmers across the world. Every produce
+        are organically
+        farmed locally and freshly brought for you. All the imported products are well preserved using only natural
+        methods for your health.</p>
+    {% endif %}
+</div>
+
+<div>
+    <div class="row g-4">
+        {% for product in products.object_list %}
+        <div class="col-4">
+            <div class="card product-card">
+                <a href="{{product.get_url}}">
+                    <img class="card-img-top" src="{{product.image.url}}" alt="{{product.name}}">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">{{product.name}}</h4>
+                    <p class="card-text">&#8377; {{product.price}}</p>
+                    {% if product.stock <= 0 %}
+                    <strong class="text-danger">Out of stock</strong>
+                    {% else %}
+                    <a href="{% url 'cart:add' product.id %}" class="btn btn-info float-end">Add to cart</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% include 'pagination.html' %}
+{% endblock body %}

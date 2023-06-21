@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadesc %}
+{{product.description|truncatewords:155}}
+{% endblock metadesc %}
+
+
+{% block title %}{% if product %}{{product.name}} | {{product.category.name}} | {% endif %}{% endblock title %}
+
+
+{% block body %}
+<div class="row">
+    <div class="mx-auto">
+        <p class="breadcrumbs">
+            <a href="{% url 'shop:home' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                    fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
+                    <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
+                </svg> Home</a> >
+            <a href="{{product.category.get_url}}">{{product.category}}</a> >
+            {{product.name}}
+        </p>
+    </div>
+</div>
+<div class="mb-3">
+    <div class="row g-5">
+        <div class="col-md-6">
+            <img src="{{product.image.url}}" class="img-fluid rounded w-100" alt="{{ product.name }}">
+        </div>
+        <div class="col-md-6">
+            <div class="card-body my-md-3">
+                <h1 class="card-title mb-4"><b>{{product.name}}</b></h1>
+                <p class="card-text">
+                <h5>Price: <b>&#8377;{{product.price}}</b></h5>
+                </p>
+                <p class="card-text mb-1"><b>Product Description</b></p>
+                <p class="card-text mb-3">{{product.description}}</p>
+                <p class="card-text mb-0">Available: {{product.stock}}</p>
+                <p class="card-text mb-5"><small class="text-body-secondary">Free delivery available</small></p>
+                <p class="card-text">
+                    {% if product.stock <= 0 %}
+                    <strong class="text-danger">Out of stock</strong>
+                    {% else %}
+                    <a href="{% url 'cart:add' product.id %}" class="btn btn-info mb-3">Add to cart</a>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,25 @@
+<div class="d-flex justify-content-center w-100 mt-5">
+
+    <nav aria-label="Products Pagination">
+        <ul class="pagination">
+
+            <li class="page-item {% if not products.has_previous %}disabled{% endif %}">
+                <a class="page-link"
+                    href="{% if products.has_previous %}?page={{products.previous_page_number}}{% endif %}">Previous</a>
+            </li>
+
+            {% for page in products.paginator.page_range %}
+            <li class="page-item {% if products.number == page %}active{% endif %}"
+                aria-current="{% if products.number == page %}page{% endif %}">
+                <a class="page-link" href="?page={{page}}">{{page}}</a>
+            </li>
+            {% endfor %}
+
+            <li class="page-item {% if not products.has_next %}disabled{% endif %}">
+                <a class="page-link"
+                    href="{% if products.has_next %}?page={{products.next_page_number}}{% endif %}">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>

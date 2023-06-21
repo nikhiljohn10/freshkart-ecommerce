@@ -1,0 +1,87 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'shop:home' %}">
+            <picture id="autoLogo">
+                <source srcset="{% static 'images/logo-dark.png' %}" media="(prefers-color-scheme: dark)" height="48">
+                <img src="{% static 'images/logo.png' %}" height="48">
+            </picture>
+            <img id="darkLogo" class="d-none" src=" {% static 'images/logo-dark.png' %}" height="48">
+            <img id="lightLogo" class="d-none" src="{% static 'images/logo.png' %}" height="48">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'shop:home' %}">All
+                        Products</a>
+                </li>
+
+                {% for cat in links %}
+                <li class="nav-item">
+                    <a class="nav-link {% if cat.slug in request.path %}active{% endif %}"
+                        href="{{ cat.get_url }}">{{cat.name}}</a>
+                </li>
+                {% endfor %}
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link {% if 'cart' in request.path %}active{% endif %}" href="{% url 'shop:home' %}">My
+                        Cart</a>
+                </li>
+            </ul>
+            <div class="ms-0">
+                <button type="button" class="btn btn-info float-start float-lg-none" data-bs-toggle="dropdown"
+                    aria-expanded="false" data-bs-auto-close="outside">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </button>
+                <form action="{% url 'search:query' %}" method="get"
+                    class="dropdown-menu w-100 m-0 py-3 border-0 rounded-0 bg-transparent">
+                    <div class=" container">
+                        <div class="row">
+                            <div
+                                class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 p-3 bg-body rounded border-info shadow-lg">
+                                <div class="input-group m-auto">
+                                    <input type="search" class="form-control" name="q" placeholder="Search text..."
+                                        aria-label="Search text..." aria-describedby="search-button">
+                                    <input class="btn btn-outline-info bg-body" type="submit" id="search-button"
+                                        value="Search">
+                                </div>
+                                <div class="mt-3 d-none">
+                                    <h3>Search results</h3>
+                                    <div>No result</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="nav-text ms-lg-3">
+                {% include 'dark-mode.html' %}
+            </div>
+            <div class="ms-3 d-none d-lg-block">
+                <a type="button" class="btn btn-info float-start float-lg-none position-relative"
+                    href="{% url 'cart:home' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-cart-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                    </svg>
+
+                    {% if item_count > 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{item_count}}
+                        <span class="visually-hidden">cart count</span>
+                    </span>
+                    {% endif %}
+
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
