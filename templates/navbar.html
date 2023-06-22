@@ -15,17 +15,26 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'shop:home' %}">All
-                        Products</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        SHOP
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item {% if request.path == '/' %}active{% endif %}"
+                                href="{% url 'shop:home' %}">All Products</a>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        {% for cat in links %}
+                        <li>
+                            <a class="dropdown-item {% if cat.slug in request.path %}active{% endif %}"
+                                href="{{ cat.get_url }}">{{cat.name}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </li>
-
-                {% for cat in links %}
-                <li class="nav-item">
-                    <a class="nav-link {% if cat.slug in request.path %}active{% endif %}"
-                        href="{{ cat.get_url }}">{{cat.name}}</a>
-                </li>
-                {% endfor %}
                 <li class="nav-item d-lg-none">
                     <a class="nav-link {% if 'cart' in request.path %}active{% endif %}" href="{% url 'shop:home' %}">My
                         Cart</a>
